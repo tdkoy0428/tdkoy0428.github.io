@@ -7,25 +7,23 @@
     <title>User ID Display</title>
     <style>
       #user-id-display {
-        white-space: nowrap; /* 防止换行 */
-        overflow: visible;   /* 确保内容不会被隐藏 */
-        text-overflow: clip; /* 禁用省略号 */
+        display: inline-block; /* 将用户 ID 和按钮保持在一行 */
         font-size: 16px;
         color: #333;
-        margin-top: 20px;
+        margin-right: 10px; /* 与按钮保持间距 */
       }
       #copy-button {
-        margin-left: 10px;
+        display: inline-block; /* 按钮与用户 ID 保持一行 */
         padding: 5px 10px;
         font-size: 14px;
         cursor: pointer;
-        background-color: #007BFF;
+        background-color: #007BFF; /* 按钮背景颜色 */
         color: #fff;
         border: none;
         border-radius: 5px;
       }
       #copy-button:hover {
-        background-color: #0056b3;
+        background-color: #0056b3; /* 鼠标悬停时的按钮颜色 */
       }
     </style>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-W11WFR9KX7"></script>
@@ -54,19 +52,19 @@
             'user_id': userId  // 传递生成的 User ID
         });
 
-        // 将 user_id 显示在网页上
+        // 将 user_id 显示在网页上，并为按钮添加复制功能
         document.addEventListener("DOMContentLoaded", function() {
             const userIdDisplayElement = document.getElementById('user-id-display');
+            const copyButton = document.getElementById('copy-button');
+            
+            // 显示用户 ID
             if (userIdDisplayElement) {
-                // 确保完整显示用户 ID
                 userIdDisplayElement.textContent = `您的用户 ID 是：${userId}`;
             }
 
-            // 为复制按钮添加点击事件
-            const copyButton = document.getElementById('copy-button');
+            // 为按钮添加点击复制功能
             if (copyButton) {
                 copyButton.addEventListener('click', function() {
-                    // 将 user_id 复制到剪贴板
                     navigator.clipboard.writeText(userId).then(() => {
                         alert('用户 ID 已复制到剪贴板！');
                     }).catch(err => {
