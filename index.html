@@ -2,47 +2,81 @@
 <html lang="zh">
 <head>
 
- <title>User ID Display</title>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W11WFR9KX7"></script>
-  <script>
-    // 定义生成 UUID 的函数
-    function generateUUID() {
-      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-      });
-    }
-
-    // 检查是否已有 user_id
-    let userId = localStorage.getItem('user_id');
-    if (!userId) {
-      // 如果没有，生成一个新的 UUID 并存储到 localStorage
-      userId = generateUUID();
-      localStorage.setItem('user_id', userId);
-    }
-
-    // 加载 Google Analytics 配置，并传递 user_id
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-W11WFR9KX7', {
-      'user_id': userId  // 传递生成的 User ID
-    });
-
-    // 将 user_id 显示在网页上
-    document.addEventListener("DOMContentLoaded", function() {
-      // 找到 ID 为 user-id-display 的元素，并设置内容为 user_id
-      const userIdDisplayElement = document.getElementById('user-id-display');
-      if (userIdDisplayElement) {
-        
-       userIdDisplayElement.textContent = `您的用户 ID 是：${userId.substring(0, 8)}...`;
-
-      }
-    });
-  </script>
-
-    <meta charset="UTF-8">
+ <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User ID Display</title>
+    <style>
+      #user-id-display {
+        white-space: nowrap; /* 防止换行 */
+        overflow: visible;   /* 确保内容不会被隐藏 */
+        text-overflow: clip; /* 禁用省略号 */
+        font-size: 16px;
+        color: #333;
+        margin-top: 20px;
+      }
+      #copy-button {
+        margin-left: 10px;
+        padding: 5px 10px;
+        font-size: 14px;
+        cursor: pointer;
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+      }
+      #copy-button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-W11WFR9KX7"></script>
+    <script>
+        // 定义生成 UUID 的函数
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+
+        // 检查是否已有 user_id
+        let userId = localStorage.getItem('user_id');
+        if (!userId) {
+            // 如果没有，生成一个新的 UUID 并存储到 localStorage
+            userId = generateUUID();
+            localStorage.setItem('user_id', userId);
+        }
+
+        // 加载 Google Analytics 配置，并传递 user_id
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-W11WFR9KX7', {
+            'user_id': userId  // 传递生成的 User ID
+        });
+
+        // 将 user_id 显示在网页上
+        document.addEventListener("DOMContentLoaded", function() {
+            const userIdDisplayElement = document.getElementById('user-id-display');
+            if (userIdDisplayElement) {
+                // 确保完整显示用户 ID
+                userIdDisplayElement.textContent = `您的用户 ID 是：${userId}`;
+            }
+
+            // 为复制按钮添加点击事件
+            const copyButton = document.getElementById('copy-button');
+            if (copyButton) {
+                copyButton.addEventListener('click', function() {
+                    // 将 user_id 复制到剪贴板
+                    navigator.clipboard.writeText(userId).then(() => {
+                        alert('用户 ID 已复制到剪贴板！');
+                    }).catch(err => {
+                        alert('复制失败，请手动复制。');
+                        console.error('复制失败：', err);
+                    });
+                });
+            }
+        });
+    </script>
     <title>亚马逊产品展示</title>
     <link rel="stylesheet" href="styles.css">
 </head>
