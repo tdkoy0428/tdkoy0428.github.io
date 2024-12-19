@@ -1,14 +1,35 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
+
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-W11WFR9KX7"></script>
 <script>
+  // 定义生成 UUID 的函数
+  function generateUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+
+  // 检查是否已有 user_id
+  let userId = localStorage.getItem('user_id');
+  if (!userId) {
+    // 如果没有，生成一个新的 UUID 并存储到 localStorage
+    userId = generateUUID();
+    localStorage.setItem('user_id', userId);
+  }
+
+  // 加载 Google Analytics 配置，并传递 user_id
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
-  gtag('config', 'G-W11WFR9KX7');
+  gtag('config', 'G-W11WFR9KX7', {
+    'user_id': userId  // 传递生成的 User ID
+  });
 </script>
+
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
