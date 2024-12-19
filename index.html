@@ -34,7 +34,9 @@
       // 找到 ID 为 user-id-display 的元素，并设置内容为 user_id
       const userIdDisplayElement = document.getElementById('user-id-display');
       if (userIdDisplayElement) {
-        userIdDisplayElement.textContent = `您的用户 ID 是：${userId}`;
+        
+       userIdDisplayElement.textContent = `您的用户 ID 是：${userId.substring(0, 8)}...`;
+
       }
     });
   </script>
@@ -45,6 +47,8 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- 添加显示 user_id 的元素 -->
+    <p id="user-id-display">正在加载用户 ID...</p>
     <header>
         <h1>精选亚马逊产品</h1>
     </header>
