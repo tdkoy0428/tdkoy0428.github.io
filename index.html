@@ -48,9 +48,14 @@
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-W11WFR9KX7', {
-            'user_id': userId  // 传递生成的 User ID
-        });
+        // gtag('config', 'G-W11WFR9KX7', {
+        //     'user_id': userId  // 传递生成的 User ID
+        // });
+     // 配置 GA4 并传递 user_id 作为事件参数
+gtag('event', 'user_engagement', { // 使用现有的 user_engagement 或其他事件
+  'custom_user_id': localStorage.getItem('user_id') // 将 user_id 传递为事件参数
+});
+
 
         // 将 user_id 显示在网页上，并为按钮添加复制功能
         document.addEventListener("DOMContentLoaded", function() {
